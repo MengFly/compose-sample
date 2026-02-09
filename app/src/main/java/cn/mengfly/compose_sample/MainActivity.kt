@@ -35,6 +35,7 @@ import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
+import cn.mengfly.compose_sample.sample.MyWechat
 import cn.mengfly.compose_sample.sample.TodoSample
 import cn.mengfly.compose_sample.sample.navigation3.Navigation3BasicSample
 import cn.mengfly.compose_sample.ui.theme.ComposeSampleTheme
@@ -64,7 +65,9 @@ private val samples = listOf(
 
     Heading("About"),
     Sample(
-        title = "我的公众号"
+        title = "我的公众号",
+        description = "关注公众号，获取更多技术文章",
+        content = { MyWechat() }
     )
 )
 
