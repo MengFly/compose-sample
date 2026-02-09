@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
+    // 添加 Kotlin 序列化插件， NavKey 需要使用序列化插件来序列化
     alias(libs.plugins.jetbrains.kotlin.serialization)
 }
 

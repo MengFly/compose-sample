@@ -39,6 +39,8 @@ import cn.mengfly.compose_sample.common.DishManager
 
 /**
  * 菜品列表页面
+ *
+ * @param onDishSelect 菜品选择回调
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview

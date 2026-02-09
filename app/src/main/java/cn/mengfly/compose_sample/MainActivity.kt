@@ -1,7 +1,6 @@
 package cn.mengfly.compose_sample
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -30,6 +29,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.net.toUri
 import androidx.lifecycle.compose.dropUnlessResumed
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entryProvider
@@ -39,7 +39,6 @@ import cn.mengfly.compose_sample.sample.TodoSample
 import cn.mengfly.compose_sample.sample.navigation3.Navigation3BasicSample
 import cn.mengfly.compose_sample.ui.theme.ComposeSampleTheme
 import kotlinx.serialization.Serializable
-import androidx.core.net.toUri
 
 @Serializable
 class Sample(
@@ -193,12 +192,12 @@ private fun SampleList(modifier: Modifier = Modifier,
 private fun Article(sample: Sample, onArticleClick: (Sample) -> Unit) {
     if (sample.articleUrl != null) {
         Icon(
-            painter = painterResource(R.drawable.ic_article),
+            painter = painterResource(R.drawable.ic_open),
             contentDescription = "Article",
             tint = Color.Unspecified,
             modifier = Modifier
                 .size(36.dp)
-                .padding(6.dp)
+                .padding(8.dp)
                 .clickable(onClick = { onArticleClick(sample) })
         )
     }

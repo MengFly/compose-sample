@@ -39,8 +39,15 @@ fun Navigation3BasicSample() {
         val navBackStack = rememberNavBackStack(Welcome)
 
         NavDisplay(
+            // 将页面返回栈传递给 NavDisplay 组件
             backStack = navBackStack,
             modifier = Modifier.fillMaxSize(),
+            // 我们希望监听返回事件，使用 onBack 来监听
+            // 其实默认的逻辑和下面的逻辑一致，这里写出来只是为了介绍
+            onBack = {
+                // 在返回时，移除栈顶的页面，也就是显示上一个页面
+                navBackStack.removeLastOrNull()
+            },
             entryProvider = entryProvider {
                 // 欢迎页面
                 entry<Welcome> {
@@ -54,6 +61,7 @@ fun Navigation3BasicSample() {
                 // 主页
                 entry<Home> {
                     DishListPage(onDishSelect = {
+                        // 点击菜品后，将菜品详情页面添加到导航栈中，显示该菜品详情页面
                         navBackStack.add(Detail(it))
                     })
                 }
