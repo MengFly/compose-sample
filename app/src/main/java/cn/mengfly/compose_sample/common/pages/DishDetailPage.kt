@@ -1,5 +1,6 @@
 package cn.mengfly.compose_sample.common.pages
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -41,7 +42,9 @@ data class DishDetail(val id: Int) : NavKey
 @Preview
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DishDetailPage(id: Int = 1) {
+fun DishDetailPage(id: Int = 1,
+                   onDishPictureClick: (Int) -> Unit = {}
+) {
     var dish: Dish? by remember { mutableStateOf(null) }
     LaunchedEffect(id) {
         dish = DishManager.getDishById(id)
@@ -73,6 +76,7 @@ fun DishDetailPage(id: Int = 1) {
                         modifier = Modifier
                             .padding(horizontal = 16.dp)
                             .size(240.dp)
+                            .clickable(onClick = { onDishPictureClick(dish.thumbnail) })
                     )
 
                     Text(

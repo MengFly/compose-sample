@@ -25,4 +25,14 @@ val navigation3Samples = arrayOf(
         description = "Scene使用方式（列表与详情页面案例，推荐使用平板模式）",
         content = { Navigation3SceneListDetailSample() }
     ),
+    Sample(
+        title = "Navigation3-Scene(Adaptive ListDetail)",
+        description = "Scene使用方式（Adaptive Material3 自带适配场景）",
+        content = { Navigation3SceneMaterialSample() }
+    ),
+    Sample(
+        title = "Navigation3-Scene(Adaptive Supporting)",
+        description = "Scene使用方式（Adaptive Material3 自带适配场景）",
+        content = { Navigation3SceneMaterialSupportingSample() }
+    ),
 )

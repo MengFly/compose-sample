@@ -59,7 +59,7 @@ fun Navigation3SceneListDetailSample() {
 }
 
 @Composable
-fun <T : Any> rememberListDetailSceneStrategy(): SceneStrategy<T> {
+private fun <T : Any> rememberListDetailSceneStrategy(): SceneStrategy<T> {
     // 需要引入依赖：androidx.compose.material3.adaptive
     val windowSizeClass = currentWindowAdaptiveInfo().windowSizeClass
     return remember { ListDetailSceneStrategy(windowSizeClass) }

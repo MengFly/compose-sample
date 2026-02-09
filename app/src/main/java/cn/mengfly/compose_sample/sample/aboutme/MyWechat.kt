@@ -46,7 +46,7 @@ fun MyWechat() {
             )
 
             Text(
-                text = "微信扫一扫二维码，关注我的公众号",
+                text = "微信扫一扫二维码，关注我的公众号\n配合公众号文章阅读源码更轻松",
                 style = MaterialTheme.typography.bodyLarge.copy(
                     color = Color.Gray
                 ),
