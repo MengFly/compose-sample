@@ -1,4 +1,4 @@
-package cn.mengfly.compose_sample.sample.common
+package cn.mengfly.compose_sample.common
 
 import androidx.annotation.DrawableRes
 import cn.mengfly.compose_sample.R

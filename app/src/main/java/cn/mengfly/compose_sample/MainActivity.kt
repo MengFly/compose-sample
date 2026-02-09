@@ -1,9 +1,13 @@
 package cn.mengfly.compose_sample
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -26,6 +30,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.dropUnlessResumed
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
@@ -34,6 +39,7 @@ import cn.mengfly.compose_sample.sample.TodoSample
 import cn.mengfly.compose_sample.sample.navigation3.Navigation3BasicSample
 import cn.mengfly.compose_sample.ui.theme.ComposeSampleTheme
 import kotlinx.serialization.Serializable
+import androidx.core.net.toUri
 
 @Serializable
 class Sample(
@@ -52,8 +58,9 @@ private val samples = listOf(
     Heading("Navigation3"),
     Sample(
         title = "Navigation3-Basic",
-        description = "Navigation3基础使用方式",
-        content = { Navigation3BasicSample() }
+        description = "Navigation3基础使用方式（如何组合多个页面，如何传递参数，如何控制页面跳转）",
+        content = { Navigation3BasicSample() },
+        articleUrl = "https://juejin.cn/post/7122967668518524165"
     ),
 
     Heading("About"),
@@ -70,6 +77,10 @@ class MainActivity : ComponentActivity() {
         setContent {
             val navBackStack = rememberNavBackStack(SampleList)
 
+            val viewArticle = rememberLauncherForActivityResult(
+                contract = ActivityResultContracts.StartActivityForResult()
+            ) {}
+
             NavDisplay(
                 backStack = navBackStack,
                 onBack = {
@@ -77,9 +88,17 @@ class MainActivity : ComponentActivity() {
                 },
                 entryProvider = entryProvider {
                     entry<SampleList> {
-                        SampleListView {
-                            navBackStack.add(it)
-                        }
+                        SampleListView(
+                            onSampleSelected = { navBackStack.add(it) },
+                            onArticleClick = {
+                                it.articleUrl?.let { url ->
+                                    viewArticle.launch(Intent().apply {
+                                        action = Intent.ACTION_VIEW
+                                        setData(url.toUri())
+                                    })
+                                }
+                            }
+                        )
                     }
                     entry<Sample> { sample ->
                         sample.content(sample)
@@ -95,9 +114,10 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
-private fun SampleListView(onSampleSelected: (Sample) -> Unit) {
+private fun SampleListView(onSampleSelected: (Sample) -> Unit,
+                           onArticleClick: (Sample) -> Unit
+) {
     ComposeSampleTheme {
-
         Scaffold(
             modifier = Modifier.fillMaxSize(),
             topBar = {
@@ -109,19 +129,21 @@ private fun SampleListView(onSampleSelected: (Sample) -> Unit) {
                     )
                 )
             }
-
         ) { innerPadding ->
-
             SampleList(
                 modifier = Modifier.padding(innerPadding),
-                onSampleSelected = onSampleSelected
+                onSampleSelected = onSampleSelected,
+                onArticleClick = onArticleClick
             )
         }
     }
 }
 
 @Composable
-private fun SampleList(modifier: Modifier = Modifier, onSampleSelected: (Sample) -> Unit = {}) {
+private fun SampleList(modifier: Modifier = Modifier,
+                       onSampleSelected: (Sample) -> Unit = {},
+                       onArticleClick: (Sample) -> Unit = {}
+) {
     LazyColumn(
         modifier = modifier.fillMaxSize()
     ) {
@@ -145,10 +167,21 @@ private fun SampleList(modifier: Modifier = Modifier, onSampleSelected: (Sample)
                 is Sample -> {
                     ListItem(
                         headlineContent = { Text(it.title) },
-                        supportingContent = { it.description?.let { desc -> Text(desc) } },
-                        trailingContent = { Article(it) },
+                        supportingContent = {
+                            it.description?.let { desc ->
+                                Text(
+                                    desc,
+                                    maxLines = 2
+                                )
+                            }
+                        },
+                        trailingContent = { Article(it, onArticleClick) },
 //                        leadingContent = { Text(it.description) },
-                        modifier = Modifier.clickable(onClick = { onSampleSelected(it) })
+                        modifier = Modifier.clickable(onClick = dropUnlessResumed {
+                            onSampleSelected(
+                                it
+                            )
+                        })
                     )
                 }
             }
@@ -157,19 +190,16 @@ private fun SampleList(modifier: Modifier = Modifier, onSampleSelected: (Sample)
 }
 
 @Composable
-private fun Article(sample: Sample) {
+private fun Article(sample: Sample, onArticleClick: (Sample) -> Unit) {
     if (sample.articleUrl != null) {
         Icon(
             painter = painterResource(R.drawable.ic_article),
             contentDescription = "Article",
             tint = Color.Unspecified,
             modifier = Modifier
-                .size(32.dp)
-                .padding(4.dp)
-                .clickable(onClick = {
-                    /* TODO: open browser */
-
-                })
+                .size(36.dp)
+                .padding(6.dp)
+                .clickable(onClick = { onArticleClick(sample) })
         )
     }
 }
