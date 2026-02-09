@@ -16,8 +16,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation3.runtime.NavKey
 import cn.mengfly.compose_sample.R
 import kotlinx.coroutines.delay
+import kotlinx.serialization.Serializable
+
+/**
+ * 欢迎页面Key
+ */
+@Serializable
+data object Welcome : NavKey
 
 /**
  * 欢迎页面

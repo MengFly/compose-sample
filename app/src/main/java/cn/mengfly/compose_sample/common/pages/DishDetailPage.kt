@@ -2,7 +2,6 @@ package cn.mengfly.compose_sample.common.pages
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -24,8 +23,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation3.runtime.NavKey
 import cn.mengfly.compose_sample.common.Dish
 import cn.mengfly.compose_sample.common.DishManager
+import kotlinx.serialization.Serializable
+
+/**
+ * 菜品详情
+ */
+@Serializable
+data class DishDetail(val id: Int) : NavKey
 
 /**
  * 菜品详情页面
@@ -47,7 +54,7 @@ fun DishDetailPage(id: Int = 1) {
         dish?.let { dish ->
             Column(
                 modifier = Modifier
-                    .fillMaxSize()
+                    .fillMaxWidth()
                     .padding(paddingValues = paddingValues),
                 verticalArrangement = Arrangement.spacedBy(8.dp),
 

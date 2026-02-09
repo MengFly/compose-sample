@@ -33,9 +33,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.dropUnlessResumed
+import androidx.navigation3.runtime.NavKey
 import cn.mengfly.compose_sample.R
 import cn.mengfly.compose_sample.common.DishManager
+import kotlinx.serialization.Serializable
 
+@Serializable
+data object DishList : NavKey
 
 /**
  * 菜品列表页面
@@ -117,7 +122,7 @@ fun DishListPage(onDishSelect: (Int) -> Unit = {}) {
         ) {
             items(DishManager.dishes) {
                 ListItem(
-                    modifier = Modifier.clickable(onClick = {
+                    modifier = Modifier.clickable(onClick = dropUnlessResumed {
                         onDishSelect(it.id)
                     }),
                     headlineContent = {

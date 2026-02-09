@@ -3,33 +3,17 @@ package cn.mengfly.compose_sample.sample.navigation3
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
+import cn.mengfly.compose_sample.common.pages.DishDetail
 import cn.mengfly.compose_sample.common.pages.DishDetailPage
+import cn.mengfly.compose_sample.common.pages.DishList
 import cn.mengfly.compose_sample.common.pages.DishListPage
+import cn.mengfly.compose_sample.common.pages.Welcome
 import cn.mengfly.compose_sample.common.pages.WelcomePage
 import cn.mengfly.compose_sample.ui.theme.ComposeSampleTheme
-import kotlinx.serialization.Serializable
 
-/**
- * 欢迎页面Key
- */
-@Serializable
-data object Welcome : NavKey
-
-/**
- * 主页Key
- */
-@Serializable
-data object Home : NavKey
-
-/**
- * 菜品详情
- */
-@Serializable
-data class Detail(val id: Int) : NavKey
 
 @Composable
 fun Navigation3BasicSample() {
@@ -55,18 +39,18 @@ fun Navigation3BasicSample() {
                         // 先移除掉欢迎页面，因为跳转后，欢迎页面将不再显示，不能点了返回之后又跳回到欢迎页面了
                         navBackStack.removeIf { it is Welcome }
                         // 将主页面添加到导航栈中
-                        navBackStack.add(Home)
+                        navBackStack.add(DishList)
                     }
                 }
                 // 主页
-                entry<Home> {
+                entry<DishList> {
                     DishListPage(onDishSelect = {
                         // 点击菜品后，将菜品详情页面添加到导航栈中，显示该菜品详情页面
-                        navBackStack.add(Detail(it))
+                        navBackStack.add(DishDetail(it))
                     })
                 }
                 // 菜品详情页
-                entry<Detail> { detail ->
+                entry<DishDetail> { detail ->
                     DishDetailPage(detail.id)
                 }
 

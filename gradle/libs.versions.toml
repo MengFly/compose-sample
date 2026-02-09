@@ -12,6 +12,8 @@ composeBom = "2025.12.00"
 # Navigation3
 lifecycleViewmodelNav3 = "2.10.0"
 nav3Core = "1.0.0"
+windowCore = "1.5.1"
+adaptive = "1.2.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -32,6 +34,8 @@ androidx-compose-material3 = { group = "androidx.compose.material3", name = "mat
 androidx-navigation3-runtime = { group = "androidx.navigation3", name = "navigation3-runtime", version.ref = "nav3Core" }
 androidx-navigation3-ui = { group = "androidx.navigation3", name = "navigation3-ui", version.ref = "nav3Core" }
 androidx-lifecycle-viewmodel-navigation3 = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-navigation3", version.ref = "lifecycleViewmodelNav3" }
+androidx-window-core = { group = "androidx.window", name = "window-core", version.ref = "windowCore" }
+androidx-compose-adaptive = { group = "androidx.compose.material3.adaptive", name = "adaptive", version.ref = "adaptive" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

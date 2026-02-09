@@ -35,9 +35,9 @@ import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
-import cn.mengfly.compose_sample.sample.MyWechat
 import cn.mengfly.compose_sample.sample.TodoSample
-import cn.mengfly.compose_sample.sample.navigation3.Navigation3BasicSample
+import cn.mengfly.compose_sample.sample.aboutme.aboutMeSampleList
+import cn.mengfly.compose_sample.sample.navigation3.navigation3Samples
 import cn.mengfly.compose_sample.ui.theme.ComposeSampleTheme
 import kotlinx.serialization.Serializable
 
@@ -52,23 +52,11 @@ class Sample(
 @Serializable
 private data object SampleList : NavKey
 
-private class Heading(val title: String)
+class Heading(val title: String)
 
 private val samples = listOf(
-    Heading("Navigation3"),
-    Sample(
-        title = "Navigation3-Basic",
-        description = "Navigation3基础使用方式（如何组合多个页面，如何传递参数，如何控制页面跳转）",
-        content = { Navigation3BasicSample() },
-        articleUrl = "https://juejin.cn/post/7122967668518524165"
-    ),
-
-    Heading("About"),
-    Sample(
-        title = "我的公众号",
-        description = "关注公众号，获取更多技术文章",
-        content = { MyWechat() }
-    )
+    *navigation3Samples,
+    *aboutMeSampleList
 )
 
 class MainActivity : ComponentActivity() {
@@ -209,7 +197,7 @@ private fun Article(sample: Sample, onArticleClick: (Sample) -> Unit) {
 
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
+fun SampleListPreview() {
     ComposeSampleTheme {
         SampleList()
     }

@@ -1,4 +1,4 @@
-package cn.mengfly.compose_sample.sample
+package cn.mengfly.compose_sample.sample.aboutme
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
