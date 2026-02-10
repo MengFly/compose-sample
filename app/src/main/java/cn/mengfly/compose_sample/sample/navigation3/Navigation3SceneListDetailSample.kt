@@ -99,19 +99,21 @@ class ListDetailScene<T : Any>(
                 listEntry.Content()
             }
 
+            if (weightAnimate >= 1f) {
+                return@Row
+            }
             // 显示详情内容
-            detailEntry?.let {
-                Column(modifier = Modifier.weight(0.6f)) {
-                    AnimatedContent(
-                        targetState = detailEntry,
-                        contentKey = { it.contentKey },
-                        // content切换动画
-                        transitionSpec = {
-                            slideInHorizontally { it } togetherWith slideOutHorizontally { -it }
-                        }
-                    ) {
-                        it.Content()
+            Column(modifier = Modifier.weight(weight = 1f - weightAnimate)) {
+                AnimatedContent(
+                    targetState = detailEntry,
+                    contentKey = { it?.contentKey },
+                    // content切换动画
+                    transitionSpec = {
+                        slideInHorizontally { it } togetherWith slideOutHorizontally { -it }
                     }
+                ) {
+                    it?.Content()
+
                 }
             }
         }
@@ -120,6 +122,7 @@ class ListDetailScene<T : Any>(
     companion object {
         // 列表页面标记
         internal const val LIST_KEY = "ListDetailScene-List"
+
         // 详情页面标记
         internal const val DETAIL_KEY = "ListDetailScene-Detail"
 
