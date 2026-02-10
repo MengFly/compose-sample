@@ -24,6 +24,7 @@ private data class DishDetail(val id: Int) : NavKey
 @Composable
 fun Navigation3SceneDialogSample() {
     val backStack = rememberNavBackStack(DishList)
+    // 弹窗策略
     val strategy = remember { DialogSceneStrategy<NavKey>() }
 
     NavDisplay(
@@ -39,10 +40,12 @@ fun Navigation3SceneDialogSample() {
                 )
             }
             entry<DishDetail>(
+                // 标记为弹窗
                 metadata = DialogSceneStrategy.dialog(DialogProperties(dismissOnBackPress = true))
             ) { detail ->
                 DishDetailPage(detail.id)
             }
+
         }
     )
 }

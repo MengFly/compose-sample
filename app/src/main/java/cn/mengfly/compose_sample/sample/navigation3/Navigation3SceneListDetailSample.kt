@@ -72,6 +72,10 @@ class ListDetailScene<T : Any>(
     val detailEntry: NavEntry<T>?,
 ) : Scene<T> {
 
+    /**
+     * 包含的页面列表，列表页面和详情页面
+     * 如果详情页面为null，则说明当前场景为列表页面
+     */
     override val entries: List<NavEntry<T>>
         get() = if (detailEntry == null) {
             listOf(listEntry)
@@ -79,23 +83,29 @@ class ListDetailScene<T : Any>(
             listOf(listEntry, detailEntry)
         }
 
+    /**
+     * 列表页面和详情页面的组合
+     */
     override val content: @Composable (() -> Unit) = {
 
         val weightAnimate by animateFloatAsState(
             if (detailEntry == null) 1f else 0.4f
         )
 
+        // 横向布局，列表页面占0.4，详情页面占0.6
         Row(modifier = Modifier.fillMaxSize()) {
             // 显示列表内容
             Column(modifier = Modifier.weight(weight = weightAnimate)) {
                 listEntry.Content()
             }
 
+            // 显示详情内容
             detailEntry?.let {
                 Column(modifier = Modifier.weight(0.6f)) {
                     AnimatedContent(
                         targetState = detailEntry,
                         contentKey = { it.contentKey },
+                        // content切换动画
                         transitionSpec = {
                             slideInHorizontally { it } togetherWith slideOutHorizontally { -it }
                         }
@@ -108,7 +118,9 @@ class ListDetailScene<T : Any>(
     }
 
     companion object {
+        // 列表页面标记
         internal const val LIST_KEY = "ListDetailScene-List"
+        // 详情页面标记
         internal const val DETAIL_KEY = "ListDetailScene-Detail"
 
         fun listPane() = mapOf(LIST_KEY to true)
@@ -139,6 +151,9 @@ class ListDetailSceneStrategy<T : Any>(val windowSizeClass: WindowSizeClass) : S
         // 原因是，如果场景Key变化的话，整个Scene页面就会重新创建，这样的话列表页面也会重新执行动画，此时可能就会出现列表页面一闪而过的情况
         // 由于列表页面是固定的，所以这里使用列表的Key作为场景的key，这样只会重新创建详情页面，动画只存在于详情页面
         val key = listEntry.contentKey
+
+        // 不要这样设置
+//        val key = detailEntry ?.contentKey ?: listEntry.contentKey
         @Suppress("UNCHECKED_CAST")
         return ListDetailScene(
             key = key as T,

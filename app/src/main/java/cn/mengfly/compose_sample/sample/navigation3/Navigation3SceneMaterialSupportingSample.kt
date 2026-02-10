@@ -30,8 +30,7 @@ fun Navigation3SceneMaterialSupportingSample() {
     val directive = remember(windowAdaptiveInfo) {
         calculatePaneScaffoldDirective(windowAdaptiveInfo)
             .copy(
-                horizontalPartitionSpacerSize = 0.dp,
-                maxHorizontalPartitions = 3
+                horizontalPartitionSpacerSize = 0.dp
             )
     }
     val supportingPaneStrategy = rememberSupportingPaneSceneStrategy<NavKey>(
