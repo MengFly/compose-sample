@@ -27,7 +27,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import androidx.lifecycle.compose.dropUnlessResumed
@@ -71,33 +71,33 @@ class MainActivity : ComponentActivity() {
                 contract = ActivityResultContracts.StartActivityForResult()
             ) {}
 
-            NavDisplay(
-                backStack = navBackStack,
-                onBack = {
-                    navBackStack.removeLastOrNull()
-                },
-                entryProvider = entryProvider {
-                    entry<SampleList> {
-                        SampleListView(
-                            onSampleSelected = { navBackStack.add(it) },
-                            onArticleClick = {
-                                it.articleUrl?.let { url ->
-                                    viewArticle.launch(Intent().apply {
-                                        action = Intent.ACTION_VIEW
-                                        setData(url.toUri())
-                                    })
+            ComposeSampleTheme {
+                NavDisplay(
+                    backStack = navBackStack,
+                    onBack = {
+                        navBackStack.removeLastOrNull()
+                    },
+                    entryProvider = entryProvider {
+                        entry<SampleList> {
+                            SampleListView(
+                                onSampleSelected = { navBackStack.add(it) },
+                                onArticleClick = {
+                                    it.articleUrl?.let { url ->
+                                        viewArticle.launch(Intent().apply {
+                                            action = Intent.ACTION_VIEW
+                                            setData(url.toUri())
+                                        })
+                                    }
                                 }
-                            }
-                        )
-                    }
-                    entry<Sample> { sample ->
-                        sample.content(sample)
-                    }
-                },
-                modifier = Modifier.fillMaxSize(),
-            )
-
-
+                            )
+                        }
+                        entry<Sample> { sample ->
+                            sample.content(sample)
+                        }
+                    },
+                    modifier = Modifier.fillMaxSize(),
+                )
+            }
         }
     }
 }
@@ -195,7 +195,7 @@ private fun Article(sample: Sample, onArticleClick: (Sample) -> Unit) {
 }
 
 
-@Preview(showBackground = true)
+@PreviewLightDark
 @Composable
 fun SampleListPreview() {
     ComposeSampleTheme {

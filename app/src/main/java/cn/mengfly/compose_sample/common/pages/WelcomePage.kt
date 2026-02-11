@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -43,22 +44,24 @@ fun WelcomePage(onTimeout: () -> Unit = {}) {
         currentTimeout()
     }
 
-    Column(
-        Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Icon(
-            painter = painterResource(id = R.drawable.ic_kitchen),
-            contentDescription = null,
-            tint = Color.Unspecified,
-        )
-
-        Text(
-            text = "欢迎",
-            style = MaterialTheme.typography.headlineLarge.copy(
-                fontWeight = FontWeight.Bold
+    Surface(Modifier.fillMaxSize()) {
+        Column(
+            Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Icon(
+                painter = painterResource(id = R.drawable.ic_kitchen),
+                contentDescription = null,
+                tint = Color.Unspecified,
             )
-        )
+
+            Text(
+                text = "欢迎",
+                style = MaterialTheme.typography.headlineLarge.copy(
+                    fontWeight = FontWeight.Bold
+                )
+            )
+        }
     }
 }
