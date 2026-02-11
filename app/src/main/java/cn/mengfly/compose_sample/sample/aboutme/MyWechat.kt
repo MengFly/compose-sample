@@ -14,13 +14,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.PreviewFontScale
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cn.mengfly.compose_sample.R
 
-@PreviewLightDark
 @Composable
+@PreviewFontScale
+@PreviewScreenSizes
 fun MyWechat() {
 
     Surface(modifier = Modifier.fillMaxSize()) {
@@ -50,7 +54,8 @@ fun MyWechat() {
                 Text(
                     text = "微信扫一扫二维码，关注我的公众号\n配合公众号文章阅读源码更轻松",
                     style = MaterialTheme.typography.bodyLarge.copy(
-                        color = Color.Gray
+                        color = Color.Gray,
+                        textAlign = TextAlign.Center
                     ),
                     modifier = Modifier.padding(top = 16.dp)
                 )
