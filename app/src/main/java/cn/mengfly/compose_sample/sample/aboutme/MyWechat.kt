@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -22,41 +23,43 @@ import cn.mengfly.compose_sample.R
 @Composable
 fun MyWechat() {
 
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
+    Surface(modifier = Modifier.fillMaxSize()) {
         Column(
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Icon(
-                painter = painterResource(id = R.drawable.wechat),
-                contentDescription = null,
-                tint = Color.Unspecified,
-                modifier = Modifier.size(240.dp)
-            )
-
-            Text(
-                text = "贰柒BUG栈",
-                style = MaterialTheme.typography.titleLarge.copy(
-                    fontSize = 32.sp
+            Column(
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.wechat),
+                    contentDescription = null,
+                    tint = Color.Unspecified,
+                    modifier = Modifier.size(240.dp)
                 )
-            )
 
-            Text(
-                text = "微信扫一扫二维码，关注我的公众号\n配合公众号文章阅读源码更轻松",
-                style = MaterialTheme.typography.bodyLarge.copy(
-                    color = Color.Gray
-                ),
-                modifier = Modifier.padding(top = 16.dp)
-            )
+                Text(
+                    text = "贰柒BUG栈",
+                    style = MaterialTheme.typography.titleLarge.copy(
+                        fontSize = 32.sp
+                    )
+                )
+
+                Text(
+                    text = "微信扫一扫二维码，关注我的公众号\n配合公众号文章阅读源码更轻松",
+                    style = MaterialTheme.typography.bodyLarge.copy(
+                        color = Color.Gray
+                    ),
+                    modifier = Modifier.padding(top = 16.dp)
+                )
+
+
+            }
 
 
         }
-
-
     }
 
 }

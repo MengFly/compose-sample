@@ -48,6 +48,8 @@ dependencies {
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
+    // 图标库
+    implementation(libs.androidx.compose.material3.icons.extended)
 
     // Navigation3
     implementation(libs.androidx.navigation3.runtime)

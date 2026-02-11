@@ -37,6 +37,7 @@ import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
 import cn.mengfly.compose_sample.sample.TodoSample
 import cn.mengfly.compose_sample.sample.aboutme.aboutMeSampleList
+import cn.mengfly.compose_sample.sample.component.basicComponentSampleList
 import cn.mengfly.compose_sample.sample.navigation3.navigation3Samples
 import cn.mengfly.compose_sample.ui.theme.ComposeSampleTheme
 import kotlinx.serialization.Serializable
@@ -55,6 +56,7 @@ private data object SampleList : NavKey
 class Heading(val title: String)
 
 private val samples = listOf(
+    *basicComponentSampleList,
     *navigation3Samples,
     *aboutMeSampleList
 )
