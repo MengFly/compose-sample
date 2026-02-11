@@ -16,6 +16,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
@@ -25,7 +26,6 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
@@ -184,15 +184,16 @@ private fun SampleList(modifier: Modifier = Modifier,
 @Composable
 private fun Article(sample: Sample, onArticleClick: (Sample) -> Unit) {
     if (sample.articleUrl != null) {
-        Icon(
-            painter = painterResource(R.drawable.ic_open),
-            contentDescription = "Article",
-            tint = Color.Unspecified,
-            modifier = Modifier
-                .size(36.dp)
-                .padding(8.dp)
-                .clickable(onClick = { onArticleClick(sample) })
-        )
+
+        IconButton(
+            onClick = { onArticleClick(sample) }) {
+            Icon(
+                painter = painterResource(R.drawable.ic_open),
+                contentDescription = "Article",
+                tint = MaterialTheme.colorScheme.secondary,
+                modifier = Modifier.size(20.dp)
+            )
+        }
     }
 }
 

@@ -35,4 +35,9 @@ val navigation3Samples = arrayOf(
         description = "Scene使用方式（Adaptive Material3 自带适配场景）",
         content = { Navigation3SceneMaterialSupportingSample() }
     ),
+    Sample(
+        title = "Navigation3-Animated",
+        description = "Navigation3动画使用方式",
+        content = { Navigation3AnimatedSample() }
+    ),
 )

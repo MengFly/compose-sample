@@ -28,30 +28,12 @@ app/src/main/java/cn/mengfly/compose_sample/
 
 ## 🚀 功能特性
 
-### 📱 示例内容
-
-#### 基础组件示例 (component包)
-- **Scaffold**：页面脚手架实现，包含顶部栏、底部栏等标准布局
-
-#### Navigation3 示例 (navigation3包)
-- **基础导航**：页面间跳转、参数传递、返回处理
-- **Dialog 场景**：弹窗式导航场景
-- **BottomSheet 场景**：底部抽屉式导航场景
-- **List-Detail 场景**：列表详情双面板导航场景
-- **Adaptive Material 场景**：自适应Material3布局场景
-- **Adaptive Supporting 场景**：自适应辅助布局场景
-
-#### 关于作者 (aboutme包)
-- **微信公众号**：技术分享和联系方式展示
-
 ### 🔧 核心技术栈
 - **Jetpack Compose**：现代化声明式UI框架
 - **Navigation3**：新一代导航系统
 - **Material Design 3**：最新的Material设计语言
 - **Kotlin Serialization**：数据序列化支持
 - **Adaptive Layout**：自适应布局组件
-- **ViewModel Navigation3**：导航状态管理
-- **Window Core**：窗口管理核心组件
 
 ## ▶️ 运行项目
 
