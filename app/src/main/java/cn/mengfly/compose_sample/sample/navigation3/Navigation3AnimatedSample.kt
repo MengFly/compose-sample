@@ -87,11 +87,11 @@ fun Navigation3AnimatedSample() {
         transitionSpec = {
             slideInHorizontally(
                 // 从画面右侧滑入(初始位置在右侧)
-                initialOffsetX = {fullWidth ->  fullWidth },
+                initialOffsetX = { fullWidth -> fullWidth },
                 animationSpec = tween(1000)
             ) togetherWith slideOutHorizontally(
                 // 从画面左侧滑出（滑动到 -fullWidth（左侧））
-                targetOffsetX = {fullWidth ->  -fullWidth },
+                targetOffsetX = { fullWidth -> -fullWidth },
                 animationSpec = tween(1000)
             )
         },
@@ -99,7 +99,7 @@ fun Navigation3AnimatedSample() {
         popTransitionSpec = {
             slideInHorizontally(
                 // 从屏幕左侧滑入（初始位置在左侧（-fullWidth））
-                initialOffsetX = {fullWidth ->  -fullWidth },
+                initialOffsetX = { fullWidth -> -fullWidth },
                 animationSpec = tween(1000)
             ) togetherWith slideOutHorizontally(
                 // 从屏幕右侧滑出（滑动到 fullWidth（右侧））

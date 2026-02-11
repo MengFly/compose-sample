@@ -3,6 +3,7 @@ package cn.mengfly.compose_sample.common.pages
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -17,11 +18,13 @@ data class PictureDetail(@param:DrawableRes val picture: Int) : NavKey
 
 @Composable
 fun PictureDetailPage(@DrawableRes picture: Int) {
-    Icon(
-        painter = painterResource(id = picture), contentDescription = null,
-        tint = Color.Unspecified,
-        modifier = Modifier.fillMaxSize()
-    )
+    Surface(modifier = Modifier.fillMaxSize()) {
+        Icon(
+            painter = painterResource(id = picture), contentDescription = null,
+            tint = Color.Unspecified,
+            modifier = Modifier.fillMaxSize()
+        )
+    }
 }
 
 @PreviewLightDark

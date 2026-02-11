@@ -24,6 +24,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.dropUnlessResumed
 import androidx.navigation3.runtime.NavKey
 import cn.mengfly.compose_sample.common.Dish
 import cn.mengfly.compose_sample.common.DishManager
@@ -76,7 +77,11 @@ fun DishDetailPage(id: Int = 1,
                         modifier = Modifier
                             .padding(horizontal = 16.dp)
                             .size(240.dp)
-                            .clickable(onClick = { onDishPictureClick(dish.thumbnail) })
+                            .clickable(onClick = dropUnlessResumed {
+                                onDishPictureClick(
+                                    dish.thumbnail
+                                )
+                            })
                     )
 
                     Text(
