@@ -44,6 +44,7 @@ class Sample(
     val description: String? = null,
     val articleUrl: String? = null,
     val source: List<String> = emptyList(),
+    @kotlinx.serialization.Transient
     val content: @Composable Sample.() -> Unit = { TodoSample(this) },
     val sourcePackage: String = getPackage()
 ) : NavKey
