@@ -9,7 +9,8 @@ val basicComponentSampleList = arrayOf(
         title = "Scaffold",
         description = "Scaffold 页面脚手架",
         content = { ScaffoldSample() },
-        articleUrl = "https://mp.weixin.qq.com/s/aSbLgn3Ln6tPxsdXEFB0fw"
+        articleUrl = "https://mp.weixin.qq.com/s/aSbLgn3Ln6tPxsdXEFB0fw",
+        source = listOf("ScaffoldSample.kt")
     ),
 
 )

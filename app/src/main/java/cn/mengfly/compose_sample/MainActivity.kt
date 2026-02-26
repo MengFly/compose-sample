@@ -1,22 +1,16 @@
 package cn.mengfly.compose_sample
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
@@ -26,15 +20,17 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
-import androidx.core.net.toUri
 import androidx.lifecycle.compose.dropUnlessResumed
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
+import cn.mengfly.compose_sample.common.SampleDocumentSceneStrategy
+import cn.mengfly.compose_sample.common.getPackage
+import cn.mengfly.compose_sample.common.pages.SampleDocument
+import cn.mengfly.compose_sample.common.pages.SampleDocumentPage
 import cn.mengfly.compose_sample.sample.TodoSample
 import cn.mengfly.compose_sample.sample.aboutme.aboutMeSampleList
 import cn.mengfly.compose_sample.sample.component.basicComponentSampleList
@@ -47,7 +43,9 @@ class Sample(
     val title: String,
     val description: String? = null,
     val articleUrl: String? = null,
-    val content: @Composable Sample.() -> Unit = { TodoSample(this) }
+    val source: List<String> = emptyList(),
+    val content: @Composable Sample.() -> Unit = { TodoSample(this) },
+    val sourcePackage: String = getPackage()
 ) : NavKey
 
 @Serializable
@@ -69,32 +67,35 @@ class MainActivity : ComponentActivity() {
         setContent {
             val navBackStack = rememberNavBackStack(SampleList)
 
-            val viewArticle = rememberLauncherForActivityResult(
-                contract = ActivityResultContracts.StartActivityForResult()
-            ) {}
-
             ComposeSampleTheme {
                 NavDisplay(
                     backStack = navBackStack,
                     onBack = {
                         navBackStack.removeLastOrNull()
                     },
+                    sceneStrategy = SampleDocumentSceneStrategy(),
                     entryProvider = entryProvider {
                         entry<SampleList> {
                             SampleListView(
-                                onSampleSelected = { navBackStack.add(it) },
-                                onArticleClick = {
-                                    it.articleUrl?.let { url ->
-                                        viewArticle.launch(Intent().apply {
-                                            action = Intent.ACTION_VIEW
-                                            setData(url.toUri())
-                                        })
+                                onSampleSelected = {
+                                    navBackStack.add(it)
+                                    // 同时，将文档的元数据传递给文档场景
+                                    val document = SampleDocument(it)
+                                    if (document.tabs().isNotEmpty()) {
+                                        navBackStack.add(document)
                                     }
                                 }
                             )
                         }
-                        entry<Sample> { sample ->
+                        entry<Sample>(
+                            metadata = SampleDocumentSceneStrategy.sample()
+                        ) { sample ->
                             sample.content(sample)
+                        }
+                        entry<SampleDocument>(
+                            metadata = SampleDocumentSceneStrategy.document()
+                        ) {
+                            SampleDocumentPage(it)
                         }
                     },
                     modifier = Modifier.fillMaxSize(),
@@ -106,9 +107,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
-private fun SampleListView(onSampleSelected: (Sample) -> Unit,
-                           onArticleClick: (Sample) -> Unit
-) {
+private fun SampleListView(onSampleSelected: (Sample) -> Unit) {
     ComposeSampleTheme {
         Scaffold(
             modifier = Modifier.fillMaxSize(),
@@ -125,7 +124,6 @@ private fun SampleListView(onSampleSelected: (Sample) -> Unit,
             SampleList(
                 modifier = Modifier.padding(innerPadding),
                 onSampleSelected = onSampleSelected,
-                onArticleClick = onArticleClick
             )
         }
     }
@@ -133,8 +131,7 @@ private fun SampleListView(onSampleSelected: (Sample) -> Unit,
 
 @Composable
 private fun SampleList(modifier: Modifier = Modifier,
-                       onSampleSelected: (Sample) -> Unit = {},
-                       onArticleClick: (Sample) -> Unit = {}
+                       onSampleSelected: (Sample) -> Unit = {}
 ) {
     LazyColumn(
         modifier = modifier.fillMaxSize()
@@ -167,7 +164,6 @@ private fun SampleList(modifier: Modifier = Modifier,
                                 )
                             }
                         },
-                        trailingContent = { Article(it, onArticleClick) },
 //                        leadingContent = { Text(it.description) },
                         modifier = Modifier.clickable(onClick = dropUnlessResumed {
                             onSampleSelected(
@@ -177,22 +173,6 @@ private fun SampleList(modifier: Modifier = Modifier,
                     )
                 }
             }
-        }
-    }
-}
-
-@Composable
-private fun Article(sample: Sample, onArticleClick: (Sample) -> Unit) {
-    if (sample.articleUrl != null) {
-
-        IconButton(
-            onClick = { onArticleClick(sample) }) {
-            Icon(
-                painter = painterResource(R.drawable.ic_open),
-                contentDescription = "Article",
-                tint = MaterialTheme.colorScheme.secondary,
-                modifier = Modifier.size(20.dp)
-            )
         }
     }
 }

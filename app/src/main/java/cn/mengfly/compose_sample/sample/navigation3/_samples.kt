@@ -8,36 +8,49 @@ val navigation3Samples = arrayOf(
     Sample(
         title = "Navigation3-Basic",
         description = "Navigation3基础使用方式（如何组合多个页面，如何传递参数，如何控制页面跳转）",
-        content = { Navigation3BasicSample() }
+        content = { Navigation3BasicSample() },
+        source = listOf("Navigation3BasicSample.kt")
     ),
     Sample(
         title = "Navigation3-Scene(Dialog)",
         description = "Scene使用方式（弹窗案例）",
-        content = { Navigation3SceneDialogSample() }
+        content = { Navigation3SceneDialogSample() },
+        source = listOf("Navigation3SceneDialogSample.kt")
     ),
     Sample(
         title = "Navigation3-Scene(BottomSheet)",
         description = "Scene使用方式（底部弹窗案例）",
-        content = { Navigation3SceneBottomSheetSample() }
+        content = { Navigation3SceneBottomSheetSample() },
+        source = listOf("Navigation3SceneBottomSheetSample.kt")
     ),
     Sample(
         title = "Navigation3-Scene(ListDetail)",
         description = "Scene使用方式（列表与详情页面案例，推荐使用平板模式）",
-        content = { Navigation3SceneListDetailSample() }
+        content = { Navigation3SceneListDetailSample() },
+        source = listOf("Navigation3SceneListDetailSample.kt")
     ),
     Sample(
         title = "Navigation3-Scene(Adaptive ListDetail)",
         description = "Scene使用方式（Adaptive Material3 自带适配场景）",
-        content = { Navigation3SceneMaterialSample() }
+        content = { Navigation3SceneMaterialSample() },
+        source = listOf("Navigation3SceneMaterialSample.kt")
     ),
     Sample(
         title = "Navigation3-Scene(Adaptive Supporting)",
         description = "Scene使用方式（Adaptive Material3 自带适配场景）",
-        content = { Navigation3SceneMaterialSupportingSample() }
+        content = { Navigation3SceneMaterialSupportingSample() },
+        source = listOf("Navigation3SceneMaterialSupportingSample.kt")
     ),
     Sample(
         title = "Navigation3-Animated",
         description = "Navigation3动画使用方式",
-        content = { Navigation3AnimatedSample() }
+        content = { Navigation3AnimatedSample() },
+        source = listOf("Navigation3AnimatedSample.kt")
     ),
+    Sample(
+        title = "Navigation3-DeepLink",
+        description = "Navigation3深度链接",
+        content = { Navigation3DeepLinkSample() },
+        source = listOf("Navigation3DeepLinkSample.kt")
+    )
 )

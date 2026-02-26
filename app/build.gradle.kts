@@ -50,6 +50,8 @@ dependencies {
     implementation(libs.androidx.compose.material3)
     // 图标库
     implementation(libs.androidx.compose.material3.icons.extended)
+    // 反射支持（为了使用注解来定义深度链接）
+    implementation(libs.kotlin.reflect)
 
     // Navigation3
     implementation(libs.androidx.navigation3.runtime)

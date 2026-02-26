@@ -8,6 +8,7 @@ val aboutMeSampleList = arrayOf(
     Sample(
         title = "我的公众号",
         description = "关注公众号，获取更多技术文章",
-        content = { MyWechat() }
+        content = { MyWechat() },
+        source = listOf("MyWechat.kt")
     )
 )
