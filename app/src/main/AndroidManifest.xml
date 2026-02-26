@@ -26,7 +26,7 @@
         <activity
             android:name=".sample.navigation3.DeepLinkActivity"
             android:exported="true">
-            <intent-filter android:autoVerify="true">
+            <intent-filter android:autoVerify="false">
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
@@ -35,6 +35,20 @@
                 <data
                     android:host="demo.compose.mengfly.cn"
                     android:scheme="https" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".sample.navigation3.AutoDeepLinkActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="demo.compose.mengfly.cn"
+                    android:scheme="mfdemo" />
             </intent-filter>
         </activity>
     </application>

@@ -2,6 +2,7 @@ package cn.mengfly.compose_sample.sample.navigation3
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Base64
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
@@ -15,18 +16,12 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.text.selection.SelectionContainer
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExposedDropdownMenuAnchorType
-import androidx.compose.material3.ExposedDropdownMenuBox
-import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -51,7 +46,9 @@ import cn.mengfly.compose_sample.common.pages.DishListPage
 import cn.mengfly.compose_sample.common.pages.PictureDetail
 import cn.mengfly.compose_sample.common.pages.PictureDetailPage
 
-private const val DEEPLINK_PREFIX = "https://demo.compose.mengfly.cn"
+private const val DEEPLINK_PREFIX = "mfdemo://demo.compose.mengfly.cn"
+
+private const val browserViewUrl = "https://mengfly.github.io/deeplink.html"
 
 // 注册深度链接
 private val deeplinkResolver = DeeplinkResolver().apply {
@@ -65,7 +62,7 @@ private val deeplinkResolver = DeeplinkResolver().apply {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 @Preview
-fun Navigation3DeepLinkSample() {
+fun Navigation3AutoDeepLinkSample() {
 
     val startActivityLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -81,7 +78,7 @@ fun Navigation3DeepLinkSample() {
         ) {
 
             Text(
-                text = "深度链接样例",
+                text = "自动深度链接样例",
                 style = MaterialTheme.typography.titleLarge
             )
 
@@ -89,7 +86,7 @@ fun Navigation3DeepLinkSample() {
             var dishId by remember { mutableIntStateOf(0) }
             val pageType = listOf("菜单列表页面", "菜品详情页面")
 
-            var deeplink by remember { mutableStateOf("$DEEPLINK_PREFIX/home") }
+            var deeplink by remember { mutableStateOf("$DEEPLINK_PREFIX/home".prepareDeepLink()) }
 
             DropDownMenu(
                 label = "选择要进入的页面类型",
@@ -97,11 +94,13 @@ fun Navigation3DeepLinkSample() {
                 selectedIndex = pageTypeIndex
             ) {
                 pageTypeIndex = it
-                deeplink = if (pageTypeIndex == 0) {
-                    "${DEEPLINK_PREFIX}/home"
-                } else {
-                    "${DEEPLINK_PREFIX}/dishDetail/${dishId+1}"
-                }
+                deeplink =
+                    if (pageTypeIndex == 0) {
+                        "${DEEPLINK_PREFIX}/home"
+                    } else {
+                        "${DEEPLINK_PREFIX}/dishDetail/${dishId + 1}"
+                    }.prepareDeepLink()
+
             }
 
             if (pageTypeIndex == 1) {
@@ -112,33 +111,32 @@ fun Navigation3DeepLinkSample() {
                     selectedIndex = dishId
                 ) {
                     dishId = it
-                    deeplink = "${DEEPLINK_PREFIX}/dishDetail/${dishId+1}"
+                    deeplink = "${DEEPLINK_PREFIX}/dishDetail/${dishId + 1}".prepareDeepLink()
                 }
             }
 
 
-            Text("深度链接地址：")
+            Text("自动深度链接地址：")
             SelectionContainer {
                 Text(
                     text = deeplink,
                     Modifier.padding(16.dp)
                 )
             }
+
             TextButton(onClick = {
                 startActivityLauncher.launch(Intent().apply {
                     data = deeplink.toUri()
                     // 启动一个新栈
-                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    action = Intent.ACTION_VIEW
                 })
             }) {
-                Text(text = "进入深度链接Activity")
+                Text(text = "打开自动深度链接")
             }
-
-            Text("点击后选择 Compose-Sample App")
 
 
             Text(
-                text = "深度链接本质上就是将连接地址(通常是url)通过Intent的方式传递给Activity," +
+                text = "自动深度链接本质上就是打开一个网络的浏览器地址，然后在浏览器地址中自动跳转app专属的schema的连接，通过浏览器启动APP," +
                         "在启动Activity后通过url解析出对应的路由。\n" +
                         "之后使用Navigation3根据这个路由显示对应的页面，完成从url到页面跳转。\n" +
                         "这里的重点并不是Navigation3, 重点是怎么从url解析出路由。\n" +
@@ -154,8 +152,18 @@ fun Navigation3DeepLinkSample() {
 
 }
 
+/**
+ * 打开网页，通过网页访问APP专属的深度链接（mfdemo://)
+ */
+private fun String.prepareDeepLink(): String {
+    return "$browserViewUrl?deeplink=" + Base64.encodeToString(
+        toByteArray(),
+        Base64.NO_WRAP
+    )
+}
 
-class DeepLinkActivity : ComponentActivity() {
+
+class AutoDeepLinkActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

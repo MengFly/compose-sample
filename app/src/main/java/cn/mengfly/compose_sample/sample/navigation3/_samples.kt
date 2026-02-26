@@ -51,6 +51,12 @@ val navigation3Samples = arrayOf(
         title = "Navigation3-DeepLink",
         description = "Navigation3深度链接",
         content = { Navigation3DeepLinkSample() },
-        source = listOf("Navigation3DeepLinkSample.kt")
-    )
+        source = listOf("Navigation3DeepLinkSample.kt", "DeeplinkResolver.kt")
+    ),
+    Sample(
+        title = "Navigation3-AutoDeepLink",
+        description = "Navigation3自动深度链接",
+        content = { Navigation3AutoDeepLinkSample() },
+        source = listOf("Navigation3AutoDeepLinkSample.kt")
+    ),
 )
