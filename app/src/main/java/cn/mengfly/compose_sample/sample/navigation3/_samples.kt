@@ -9,7 +9,8 @@ val navigation3Samples = arrayOf(
         title = "Navigation3-Basic",
         description = "Navigation3基础使用方式（如何组合多个页面，如何传递参数，如何控制页面跳转）",
         content = { Navigation3BasicSample() },
-        source = listOf("Navigation3BasicSample.kt")
+        source = listOf("Navigation3BasicSample.kt"),
+        articleUrl = "https://mp.weixin.qq.com/s/93o4Y5146kBedukOhdL30Q"
     ),
     Sample(
         title = "Navigation3-Scene(Dialog)",
