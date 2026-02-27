@@ -169,7 +169,7 @@ class AutoDeepLinkActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         // 匹配深度链接，如果匹配不到，则使用 默认路由
-        val key = deeplinkResolver.resolve(intent.data.toString()) ?: DishList
+        val key = intent.data?.let { deeplinkResolver.resolve(it) } ?: DishList
         enableEdgeToEdge()
 
         /*
