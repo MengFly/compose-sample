@@ -28,7 +28,8 @@ val navigation3Samples = arrayOf(
         title = "Navigation3-Scene(ListDetail)",
         description = "Scene使用方式（列表与详情页面案例，推荐使用平板模式）",
         content = { Navigation3SceneListDetailSample() },
-        source = listOf("Navigation3SceneListDetailSample.kt")
+        source = listOf("Navigation3SceneListDetailSample.kt"),
+        articleUrl = "https://mp.weixin.qq.com/s/n80Lra7sWqPZHkH4-RTNWA"
     ),
     Sample(
         title = "Navigation3-Scene(Adaptive ListDetail)",
