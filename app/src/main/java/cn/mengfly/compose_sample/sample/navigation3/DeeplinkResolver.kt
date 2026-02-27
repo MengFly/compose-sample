@@ -15,19 +15,28 @@ import kotlinx.serialization.modules.EmptySerializersModule
 
 class DeeplinkResolver(
 ) {
+    /**
+     * 存储所有的deeplink信息
+     */
     private val deepLinks = mutableListOf<DeeplinkElement<*>>()
 
+    /**
+     * 注册deeplink信息
+     */
     fun <T : NavKey> register(serializer: KSerializer<T>, pattern: String) {
         deepLinks.add(
             DeeplinkElement(pattern, serializer)
         )
     }
 
-    fun resolve(data: String): NavKey? {
-        val uri = data.toUri()
-
+    /**
+     * 解析deeplink
+     */
+    fun resolve(uri: Uri): NavKey? {
         for (element in deepLinks) {
+            // 判断是否匹配，如果匹配成功，返回解析的key
             val key = element.matcher(uri)
+            // 如果解析的结果为空，说明不匹配
             if (key != null) {
                 return key
             }
@@ -43,6 +52,9 @@ private data class DeeplinkElement<T : NavKey>(
 ) {
     private val patternUri = pattern.toUri()
 
+    /**
+     * 解析路径列表
+     */
     private val pathSegments by lazy {
         buildList {
             // 获取uri中路径信息，并判断每一个子路径是否是参数
@@ -57,6 +69,11 @@ private data class DeeplinkElement<T : NavKey>(
         }
     }
 
+    /**
+     * 判断是否匹配Uri
+     *
+     * @return 如果匹配成功，则返回解析的key，否则返回null
+     */
     fun matcher(uri: Uri): T? {
 
         // 从pathSegments中校验匹配，并且如果遇到路径是参数的情况，则将参数值保存起来

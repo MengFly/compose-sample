@@ -15,18 +15,12 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.text.selection.SelectionContainer
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExposedDropdownMenuAnchorType
-import androidx.compose.material3.ExposedDropdownMenuBox
-import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -100,7 +94,7 @@ fun Navigation3DeepLinkSample() {
                 deeplink = if (pageTypeIndex == 0) {
                     "${DEEPLINK_PREFIX}/home"
                 } else {
-                    "${DEEPLINK_PREFIX}/dishDetail/${dishId+1}"
+                    "${DEEPLINK_PREFIX}/dishDetail/${dishId + 1}"
                 }
             }
 
@@ -112,7 +106,7 @@ fun Navigation3DeepLinkSample() {
                     selectedIndex = dishId
                 ) {
                     dishId = it
-                    deeplink = "${DEEPLINK_PREFIX}/dishDetail/${dishId+1}"
+                    deeplink = "${DEEPLINK_PREFIX}/dishDetail/${dishId + 1}"
                 }
             }
 
@@ -161,7 +155,7 @@ class DeepLinkActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         // 匹配深度链接，如果匹配不到，则使用 默认路由
-        val key = deeplinkResolver.resolve(intent.data.toString()) ?: DishList
+        val key = intent.data?.let { deeplinkResolver.resolve(it) } ?: DishList
         enableEdgeToEdge()
 
         /*

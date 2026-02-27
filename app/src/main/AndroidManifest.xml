@@ -28,13 +28,12 @@
             android:exported="true">
             <intent-filter android:autoVerify="false">
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="demo.compose.mengfly.cn"
-                    android:scheme="https" />
+                    android:scheme="https"
+                    android:host="demo.compose.mengfly.cn" />
             </intent-filter>
         </activity>
 
